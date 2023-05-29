@@ -1,1 +1,13 @@
-# vr-volleyball
+# Immersive VR Volleyball Game
+
+## Screenshots
+
+## How to Play
+
+
+### Developer Notes
+Unity editor version 2021.3.21f1 LTS
+
+### Resources and Attributions
+Character modelling tutorial https://www.youtube.com/watch?v=DAAwy_l4jw4
+Volleyball modelling tutorial https://www.youtube.com/watch?v=xnpQEkDNxeM
