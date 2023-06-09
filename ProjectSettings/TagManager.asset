@@ -7,6 +7,8 @@ TagManager:
   - Plane_blue
   - Plane_red
   - Ball
+  - OpponentAI
+  - Hand
   layers:
   - Default
   - TransparentFX

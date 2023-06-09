@@ -17,10 +17,15 @@ public class ScoreManager : MonoBehaviour
 
     public bool isGameFinished = false;
 
+    public AudioSource win;
+    public AudioSource lose;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        win = GetComponent<AudioSource>();
+        lose = GetComponent<AudioSource>();
         UpdateScoreUI();
     }
 
@@ -48,15 +53,17 @@ public class ScoreManager : MonoBehaviour
     // Game finished if reached 25 points with a minimunm 2 point lead.
     private void CheckWinCondition() {
         if (!isGameFinished) {
-            if (playerScore >= 5 && playerScore - opponentScore >= 2) {
+            if (playerScore >= 10 && playerScore - opponentScore >= 2) {
                 //Debug.log("player win");
                 isGameFinished = true;
                 winUI.alpha = 1;
+                win.Play();
             }
-            else if (opponentScore >= 5 && opponentScore - playerScore >= 2) {
+            else if (opponentScore >= 10 && opponentScore - playerScore >= 2) {
                 //Debug.log("opponent win");
                 isGameFinished = true;
                 lossUI.alpha = 1;
+                lose.Play();
             }else{
             	BallGenerator.GenerateBall();
             }

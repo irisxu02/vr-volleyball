@@ -9,12 +9,16 @@ public class BallGenerator : MonoBehaviour
     public Transform spawnPoint; // Spawn point for the new ball
 	public ScoreManager ScoreManager;
 	public TMPro.TextMeshProUGUI Downcount;
+    public AudioSource whistle;
+	public AudioSource hitSound;
+
 
 	GameObject spawnBall;
 
 	IEnumerator downcount(){
-		spawnBall = Instantiate(Volleyball, spawnPoint.position, spawnPoint.rotation);
-        spawnBall.GetComponent<Rigidbody>().isKinematic = true;
+		//yield return new WaitForSeconds(2f);
+		
+
 		Downcount.alpha = 1;
 		Downcount.text = "3";
 		yield return new WaitForSeconds(1f);
@@ -22,31 +26,42 @@ public class BallGenerator : MonoBehaviour
 		yield return new WaitForSeconds(1f);
 		Downcount.text = "1";
 		yield return new WaitForSeconds(1f);
+		spawnBall = Instantiate(Volleyball, spawnPoint.position, spawnPoint.rotation);
+		spawnBall.GetComponent<Rigidbody>().isKinematic = true;
 		Downcount.text = "GO!";
 		yield return new WaitForSeconds(1f);
 		Downcount.alpha = 0;
-		spawnBall.GetComponent<Rigidbody>().velocity = spawnPoint.forward * 5;
-        spawnBall.GetComponent<Rigidbody>().isKinematic = false;
+		Vector3 v = new Vector3(0,1,0);
+		
+		spawnBall.GetComponent<Rigidbody>().velocity = v * 8;
+		spawnBall.GetComponent<Rigidbody>().isKinematic = false;
+		//whistle.Play();
 	}
     // Start is called before the first frame update
     void Start()
     {
+        whistle = GetComponent<AudioSource>();
         StartCoroutine(downcount());
     }
 
 
     public void GenerateBall()
     {
-        StartCoroutine(downcount());
+        StartCoroutine(downcount()); 
     }
 
     public void DestroyBall()
     {
     	Destroy(spawnBall);
     }
-    // Update is called once per frame
-    void Update()
+    
+	void OnCollisionEnter(Collision collision)
     {
-        
+        // Check if the collision is with the ball
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            // Play the bounce sound effect
+            hitSound.Play();
+        }
     }
 }
